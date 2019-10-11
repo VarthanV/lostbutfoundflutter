@@ -21,6 +21,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+
+
   Widget _userNameField(){
     return Column( 
       crossAxisAlignment: CrossAxisAlignment.start,
