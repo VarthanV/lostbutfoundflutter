@@ -5,7 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'loginpage.dart';
-
+import 'package:http/http.dart' as http;
+import '../main.dart';
 bool _showPassword = true;
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 bool _autoValidate = false;
@@ -21,7 +22,16 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-
+signup(){
+  http.post(host + 'register/',body:{
+    'username':_name,
+    'email':_email,
+    '_password':_password,
+    'phone_no':_phoneNumber
+  }).then((response){
+    print(response.statusCode);
+  });
+}
 
   Widget _userNameField(){
     return Column( 
