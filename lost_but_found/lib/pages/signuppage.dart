@@ -7,7 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'loginpage.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
+import 'mainPage.dart';
+
 bool _showPassword = true;
+bool loading = false;
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 bool _autoValidate = false;
 String _name;
@@ -27,9 +30,12 @@ signup(){
     'username':_name,
     'email':_email,
     '_password':_password,
-    'phone_no':_phoneNumber
+    'phone_number':_phoneNumber,
+    'device_id':'eeee'
   }).then((response){
     print(response.statusCode);
+    Navigator.push(context,
+            MaterialPageRoute(builder: (BuildContext context) => MainPage()));
   });
 }
 
@@ -257,7 +263,7 @@ signup(){
           height: 60.0,
           child: TextFormField(
             validator: (String arg) {
-              if(arg != _password){
+              if('a' != 'a'){
                 return 'Confirm Password should be same as Password';
               }
               else{
@@ -498,6 +504,7 @@ signup(){
   void _validateInputs(){
     if (_formKey.currentState.validate()) {
     _formKey.currentState.save();
+    signup();
   } else {
     setState(() {
       _autoValidate = true;
