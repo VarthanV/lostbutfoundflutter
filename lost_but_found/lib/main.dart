@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './pages/loginpage.dart';
 
 void main() => runApp(MyApp());
-var host='https://870024c0.ngrok.io';
+var host='http://87046cfe.ngrok.io/';
 
 class MyApp extends StatelessWidget {
   @override

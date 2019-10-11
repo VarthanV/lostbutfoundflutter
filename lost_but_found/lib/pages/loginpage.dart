@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'mainPage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -26,18 +26,38 @@ class _LoginPageState extends State<LoginPage> {
   var messaging = FirebaseMessaging();
 
   login() async {
-    var token = await messaging.getToken();
-    http.post(host + 'login/', body: {
+    //var token = await messaging.getToken();
+    http.post(host +'login/', body: {
       'email': _email,
       'password': _password,
-      'device_id': token
+      'device_id': 'ccc'
     }).then((response) {
+      print(response.statusCode);
       if (response.statusCode == 200) {
         SharedPreferences.getInstance().then((prefs) {
           prefs.setString('token', jsonDecode(response.body)['token']);
         });
+        Navigator.push(context,
+            MaterialPageRoute(builder: (BuildContext context) => MainPage()));
       } else {
         print("Error");
+        showDialog(
+          barrierDismissible: true,
+          context: context,
+          builder: (BuildContext context){
+            return new AlertDialog( 
+              title: Text("Check your email and password!"),
+              actions: <Widget>[ 
+                new FlatButton( 
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("ok"),
+                )
+              ],
+            );
+          },
+        );
       }
     });
   }
@@ -205,14 +225,9 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _signUpText() {
     return GestureDetector(
-<<<<<<< HEAD
-      onTap: (){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => SignUpPage()));
-=======
       onTap: () {
         Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) => SignUpPage()));
->>>>>>> 88b74bef3547d25e7ef14d53c174c6cfb99aecc3
       },
       child: RichText(
         text: TextSpan(children: [
@@ -309,6 +324,7 @@ class _LoginPageState extends State<LoginPage> {
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
+      login();
     } else {
       setState(() {
         _autoValidate = true;
