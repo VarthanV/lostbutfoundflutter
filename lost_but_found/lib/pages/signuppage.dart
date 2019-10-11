@@ -26,6 +26,9 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
 signup(){
+  setState(){
+    isLoading=true;
+  }
   http.post(host + 'register/',body:{
     'username':_name,
     'email':_email,
@@ -487,7 +490,7 @@ signup(){
                           _confirmPassword(),
                           SizedBox(height: 30.0,),
                           _phoneNumberField(),
-                          _signUpButton(),
+                         isLoading ? _signUpButton() :Container(child:CircularProgressIndicator()),
                           _signInText(),
                         ],
                   ),
