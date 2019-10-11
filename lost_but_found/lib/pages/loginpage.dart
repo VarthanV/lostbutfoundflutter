@@ -195,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _signUpText(){
     return GestureDetector(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => SignUpPage()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => SignUpPage()));
       },
       child: RichText(
         text: TextSpan( 

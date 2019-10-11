@@ -50,7 +50,19 @@ class _SignUpPageState extends State<SignUpPage> {
             ]
           ),
           height: 60.0,
-          child: TextFormField( 
+          child: TextFormField(
+            validator: (String arg) {
+              if(arg.length < 3){
+                return 'User Name cannot be empty';
+              }
+              else{
+                 return null;
+              }
+               
+            }, 
+            onSaved: (String val){
+              _name = val;
+            },
             style: TextStyle(
               color:Colors.white,
 
@@ -100,6 +112,18 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           height: 60.0,
           child: TextFormField( 
+            validator: (String arg) {
+              if(arg.length < 8){
+                return 'email cannot be empty';
+              }
+              else{
+                 return null;
+              }
+               
+            },
+            onSaved: (String val){
+              _email = val;
+            },
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color:Colors.white,
@@ -150,6 +174,18 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           height: 60.0,
           child: TextFormField(
+            validator: (String arg) {
+              if(arg.length < 8){
+                return 'Minimum length of the password must be 8';
+              }
+              else{
+                 return null;
+              }
+               
+            }, 
+            onSaved: (String val){
+              _password = val;
+            },
             obscureText: _showPassword, 
             style: TextStyle(
               color:Colors.white,
@@ -208,6 +244,18 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           height: 60.0,
           child: TextFormField(
+            validator: (String arg) {
+              if(arg != _password){
+                return 'Confirm Password should be same as Password';
+              }
+              else{
+                 return null;
+              }
+               
+            }, 
+            onSaved: (String val){
+              _confirmedPassword = val;
+            },
             obscureText: true, 
             style: TextStyle(
               color:Colors.white,
@@ -258,6 +306,18 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           height: 60.0,
           child: TextFormField(
+            validator: (String arg) {
+              if(arg.length < 10){
+                return 'Check your phone number';
+              }
+              else{
+                 return null;
+              }
+               
+            }, 
+            onSaved: (String val){
+              _phoneNumber = val;
+            },
             keyboardType: TextInputType.phone, 
             style: TextStyle(
               color:Colors.white,
@@ -301,7 +361,7 @@ class _SignUpPageState extends State<SignUpPage> {
       width: double.infinity,
       child: RaisedButton( 
         elevation: 5.0,
-        onPressed: (){},
+        onPressed: _validateInputs,
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -323,7 +383,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _signInText(){
     return GestureDetector(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
       },
       child: RichText(
         text: TextSpan( 
@@ -422,5 +482,14 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       )
     );
+  }
+  void _validateInputs(){
+    if (_formKey.currentState.validate()) {
+    _formKey.currentState.save();
+  } else {
+    setState(() {
+      _autoValidate = true;
+    });
+  }
   }
 }
